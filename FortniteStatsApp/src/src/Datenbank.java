@@ -13,14 +13,17 @@ public class Datenbank {
     private void init()
     {
         String url = "jdbc:oracle:thin:@172.22.160.22:1521:XE";
-        try(Connection con = DriverManager.getConnection(url))
+        String user  = "C##FBPOOL211";
+        String password = "oracle";
+        try()
         {
-            this.con = con;
+            con = DriverManager.getConnection(url, user, password);
         }
-        catch(SQLException e)
+        catch (SQLException e)
         {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
+
     }
 
     public void checkUserID() {
