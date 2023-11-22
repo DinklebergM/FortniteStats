@@ -15,14 +15,13 @@ public class Datenbank {
         String url = "jdbc:oracle:thin:@172.22.160.22:1521:XE";
         String user  = "C##FBPOOL211";
         String password = "oracle";
-        try()
+        try(Connection con = DriverManager.getConnection(url, user, password) )
         {
-            con = DriverManager.getConnection(url, user, password);
-        }
-        catch (SQLException e)
-        {
+            System.out.println("A");
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 
