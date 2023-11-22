@@ -15,9 +15,9 @@ public class Datenbank {
         String url = "jdbc:oracle:thin:@172.22.160.22:1521:XE";
         String user  = "C##FBPOOL211";
         String password = "oracle";
-        try(Connection con = DriverManager.getConnection(url, user, password) )
+        try
         {
-            System.out.println("A");
+            con = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
