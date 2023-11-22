@@ -23,6 +23,42 @@ public class Datenbank {
         }
     }
 
+    public void checkUserID() {
+        try {
+            CallableStatement call = this.con.prepareCall("{call P_CHECK_USERNAME(?)}");
+
+            try {
+                call.setString(1, "RandomPlayer2");
+                call.execute();
+                ResultSet rs = (ResultSet)call.getObject(2);
+                int vorhanden = rs.getInt(0);
+                int id = rs.getInt(1);
+                System.out.println(vorhanden);
+                System.out.println(id);
+                rs.close();
+                call.close();
+                this.con.close();
+            } catch (Throwable var6) {
+                if (call != null) {
+                    try {
+                        call.close();
+                    } catch (Throwable var5) {
+                        var6.addSuppressed(var5);
+                    }
+                }
+
+                throw var6;
+            }
+
+            if (call != null) {
+                call.close();
+            }
+        } catch (SQLException var7) {
+            System.out.println(var7);
+        }
+
+    }
+
     public void addPlayer(Player player)
     {
         String sqlString = "UPDATE PLAYERS SET id=?, " +
