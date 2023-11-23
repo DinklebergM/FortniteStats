@@ -1,14 +1,19 @@
 import java.sql.*;
-import java.util.Calendar;
+import oracle.jdbc.OracleTypes;
+import java.util.*;
+
 
 public class Datenbank {
-
+private int ownUserID;
     Connection con;
 
     public Datenbank() {
         this.init();
     }
 
+    public int getOwnUserID() {
+        return ownUserID;
+    }
     private void init() {
         String url = "jdbc:oracle:thin:@172.22.160.22:1521:XE";
         String user = "C##FBPOOL211";
@@ -21,12 +26,12 @@ public class Datenbank {
 
     }
 
-    public void checkUserID() {
+    public int checkUserID(String username) {
         try {
             CallableStatement call = this.con.prepareCall("{call P_CHECK_USERNAME(?,?,?)}");
 
             try {
-                call.setString(1, "RandomPlayer5");
+                call.setString(1, username);
                 call.registerOutParameter(2, Types.INTEGER);
                 call.registerOutParameter(3, Types.INTEGER);
                 call.execute();
@@ -34,15 +39,18 @@ public class Datenbank {
                 int userId = call.getInt(3);
 
                 if (exists > 0) {
-                    System.out.println("Username exists. User ID: " + userId);
-                    //UserID speichern und Login fortsetzen
+                    call.close();
+
+                    this.ownUserID=userId;
+                  return userId;
                 } else {
-                    System.out.println("Username does not exist.");
-                    // login abbrechen
+                    call.close();
+
+                    return 0;
                 }
 
-                call.close();
-                this.con.close();
+
+
             } catch (Throwable var6) {
                 if (call != null) {
                     try {
@@ -55,11 +63,10 @@ public class Datenbank {
                 throw var6;
             }
 
-            if (call != null) {
-                call.close();
-            }
+
         } catch (SQLException var7) {
             System.out.println(var7);
+            return 0;
         }
 
     }
@@ -69,26 +76,56 @@ public class Datenbank {
         try {
             CallableStatement call = this.con.prepareCall("{call P_FRIENDACTION(?,?,?)}");
             try {
-                call.setString(1,playerId1);
-                call.seString(2,playerId2);
-                call.setString(3,status);
+                call.setString(1, String.valueOf(playerId1));
+                call.setString(2, String.valueOf(playerId2));
+                call.setString(3, String.valueOf(status));
                 call.execute();
-            }
-        }
-    }
-    public Player[] getAllPlayer(){
-        try {
-            CallableStatement call = this.con.prepareCall("{call P_GET_ALL_USERNAMES_AND_IDS(?)}");
-            try {
-                call.registerOutParameter(1, OracleTypes.CURSOR);
-                call.execute();
-                resultSet = (ResultSet) callableStatement.getObject(1);
-                while (resultSet.next()) {
-                    // Daten aus ResultSet lesen, z.B. resultSet.getInt("column_name")
+            }finally {
+                if (call != null) {
+                    call.close();
                 }
             }
+        } catch (SQLException e) {
+            // Hier können Sie die Fehlermeldung ausgeben oder anderweitig reagieren
+            System.err.println("SQL-Fehler: " + e.getMessage());
         }
     }
+    public List<User> getAllPlayer(){
+        CallableStatement call = null;
+        ResultSet resultSet = null;
+        try {
+            call = this.con.prepareCall("{call P_GET_ALL_USERNAMES_AND_IDS(?)}");
+            call.registerOutParameter(1, OracleTypes.CURSOR);
+            call.execute();
+            resultSet = (ResultSet) call.getObject(1);
+
+            // Erstellen Sie eine Liste oder ein Array, um die Spielerdaten zu speichern
+            List<User> userList = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                String username = resultSet.getString("username");
+                int userId = resultSet.getInt("id");
+                userList.add(new User( userId,username));
+            }
+
+
+            return userList;
+        } catch (SQLException e) {
+            // Hier könnten Sie prüfen, ob es sich um einen bestimmten SQL-Fehler handelt
+            // und entsprechend reagieren
+            System.out.println("SQL-Fehler: " + e.getMessage());
+            return null; // oder werfen Sie eine benutzerdefinierte Ausnahme
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (call != null) call.close();
+            } catch (SQLException e) {
+                System.out.println("Fehler beim Schließen der Ressourcen: " + e.getMessage());
+            }
+        }
+    }
+
 
 
     /*
