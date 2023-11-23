@@ -74,7 +74,7 @@ private int ownUserID;
     public void friendAction(int playerId1, int playerId2, int status){
 
         try {
-            CallableStatement call = this.con.prepareCall("{call P_FRIENDACTION(?,?,?)}");
+            CallableStatement call = this.con.prepareCall("{call P_FRIEND_ACTION(?,?,?)}");
             try {
                 call.setString(1, String.valueOf(playerId1));
                 call.setString(2, String.valueOf(playerId2));

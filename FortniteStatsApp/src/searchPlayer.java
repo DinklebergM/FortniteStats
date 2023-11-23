@@ -32,7 +32,13 @@ public class searchPlayer {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JFrame frame = new JFrame("Player Stats");
+                Playerstats playerstats = new Playerstats(datenbank,users.get(comboPlayer.getSelectedIndex()).getID());
+                frame.setContentPane(playerstats.panelPlayerstats);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
     }
