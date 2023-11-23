@@ -35,8 +35,10 @@ public class Datenbank {
 
                 if (exists > 0) {
                     System.out.println("Username exists. User ID: " + userId);
+                    //UserID speichern und Login fortsetzen
                 } else {
                     System.out.println("Username does not exist.");
+                    // login abbrechen
                 }
 
                 call.close();
@@ -61,6 +63,33 @@ public class Datenbank {
         }
 
     }
+
+    public void friendAction(int playerId1, int playerId2, int status){
+
+        try {
+            CallableStatement call = this.con.prepareCall("{call P_FRIENDACTION(?,?,?)}");
+            try {
+                call.setString(1,playerId1);
+                call.seString(2,playerId2);
+                call.setString(3,status);
+                call.execute();
+            }
+        }
+    }
+    public Player[] getAllPlayer(){
+        try {
+            CallableStatement call = this.con.prepareCall("{call P_GET_ALL_USERNAMES_AND_IDS(?)}");
+            try {
+                call.registerOutParameter(1, OracleTypes.CURSOR);
+                call.execute();
+                resultSet = (ResultSet) callableStatement.getObject(1);
+                while (resultSet.next()) {
+                    // Daten aus ResultSet lesen, z.B. resultSet.getInt("column_name")
+                }
+            }
+        }
+    }
+
 
     /*
      * public void addPlayer(Player player) {
