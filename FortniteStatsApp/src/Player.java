@@ -26,42 +26,18 @@ public class Player {
     {
         return id;
     }
-
     public String getUsername()
     {
         return username;
     }
-
     public void setUsername(String username)
     {
         this.username = username;
     }
-
     public String getEmail()
     {
         return email;
     }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public void addWin()
-    {
-        wins++;
-    }
-
-    public void addMatchCount()
-    {
-        matchCount++;
-    }
-
-    public void addKills(int addedKills)
-    {
-        kills += addedKills;
-    }
-
     public Date getCreationDate()
     {
         return creationDate;

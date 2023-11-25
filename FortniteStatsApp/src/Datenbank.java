@@ -90,7 +90,7 @@ private int ownUserID;
             System.err.println("SQL-Fehler: " + e.getMessage());
         }
     }
-    public List<User> getAllPlayer(){
+    public List<Player> getAllPlayer(){
         CallableStatement call = null;
         ResultSet resultSet = null;
         try {
@@ -100,13 +100,13 @@ private int ownUserID;
             resultSet = (ResultSet) call.getObject(1);
 
             // Erstellen Sie eine Liste oder ein Array, um die Spielerdaten zu speichern
-            List<User> userList = new ArrayList<>();
+            List<Player> userList = new ArrayList<>();
 
             while (resultSet.next()) {
 
                 String username = resultSet.getString("username");
                 int userId = resultSet.getInt("id");
-                userList.add(new User( userId,username));
+                userList.add(new Player( userId,username, null, 0, 0, 0, null));
             }
 
 
@@ -158,4 +158,27 @@ private int ownUserID;
         return matchResults;
     }
 
+    public List<Player> getFriends(int id){
+        List<Player> player = new ArrayList<>();
+        CallableStatement call ;
+        ResultSet resultSet ;
+        try {
+            call = this.con.prepareCall("{call P_GET_FRIENDS(?)}");
+            call.setInt(1, id);
+            call.registerOutParameter(2, OracleTypes.CURSOR);
+            call.execute();
+            resultSet = (ResultSet) call.getObject(2);
+            while (resultSet.next()) {
+                int playerId = resultSet.getInt("ID");
+                String username = resultSet.getString("USERNAME");
+                player.add(new Player(playerId, username, null, 0, 0, 0, null));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        ;
+        return player;
+    }
 }
