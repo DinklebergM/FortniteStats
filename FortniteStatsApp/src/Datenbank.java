@@ -158,5 +158,4 @@ private int ownUserID;
         return matchResults;
     }
 
-
 }
