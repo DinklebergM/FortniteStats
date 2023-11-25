@@ -112,10 +112,9 @@ private int ownUserID;
 
             return userList;
         } catch (SQLException e) {
-            // Hier könnten Sie prüfen, ob es sich um einen bestimmten SQL-Fehler handelt
-            // und entsprechend reagieren
+
             System.out.println("SQL-Fehler: " + e.getMessage());
-            return null; // oder werfen Sie eine benutzerdefinierte Ausnahme
+            return null;
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
@@ -126,28 +125,38 @@ private int ownUserID;
         }
     }
 
+    public List<MatchResult> getLastTenMatches(int id) {
+        List<MatchResult> matchResults = new ArrayList<>();
+        CallableStatement call = null;
+        ResultSet resultSet = null;
 
+        try {
+            call = this.con.prepareCall("{call P_GET_LAST_10_MATCHES(?,?)}");
+            call.setInt(1, id);
+            call.registerOutParameter(2, OracleTypes.CURSOR);
+            call.execute();
+            resultSet = (ResultSet) call.getObject(2);
 
-    /*
-     * public void addPlayer(Player player) {
-     * String sqlString = "UPDATE PLAYERS SET id=?, " +
-     * "username=?, email=?, wins=?, count_matches=?, kills=?,create_at=?";
-     * 
-     * try (PreparedStatement stmt = con.prepareStatement(sqlString);) {
-     * 
-     * stmt.setInt(1, player.getID());
-     * stmt.setString(2, player.getUsername());
-     * stmt.setString(3, player.getEmail());
-     * stmt.setInt(4, 0);
-     * stmt.setInt(5, 0);
-     * stmt.setInt(6, 0);
-     * stmt.setDate(7, new Date(Calendar.YEAR, Calendar.MONTH,
-     * Calendar.DAY_OF_MONTH));
-     * } catch (SQLException e) {
-     * System.out.println(e);
-     * }
-     * 
-     * }
-     */
+            while (resultSet.next()) {
+                int matchID = resultSet.getInt("MATCHID");
+                java.util.Date matchDate = resultSet.getDate("MATCH_DATE");
+                int placement = resultSet.getInt("PLACEMENT");
+                int kills = resultSet.getInt("KILLS");
+                matchResults.add(new MatchResult(matchID, matchDate, placement, kills));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Schließen der Ressourcen
+            if (resultSet != null) {
+                try { resultSet.close(); } catch (SQLException e) { /* Handhabung */ }
+            }
+            if (call != null) {
+                try { call.close(); } catch (SQLException e) { /* Handhabung */ }
+            }
+        }
+        return matchResults;
+    }
+
 
 }

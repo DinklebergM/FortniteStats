@@ -1,28 +1,31 @@
+import java.util.Date;
+
 public class MatchResult
 {
     private final int matchID;
-    private final int playerID;
+    private Date matchDate;
+    private int kills;
     private final int placement;
 
-    public MatchResult(int matchID, int playerID, int placement)
+    public MatchResult(int matchID, Date matchDate, int kills, int placement)
     {
         this.matchID = matchID;
-        this.playerID = playerID;
+        this.matchDate= matchDate;
         this.placement = placement;
+        this.kills=kills;
     }
 
-    public int getMatchID()
+    public int getMatchId()
     {
         return matchID;
     }
 
-    public int getPlayerID()
-    {
-        return playerID;
-    }
+    public Date getMatchDate() {return matchDate;}
+
 
     public int getPlacement()
     {
         return placement;
     }
+    public int getKills() {return kills;}
 }
