@@ -12,8 +12,8 @@ public class searchPlayer {
         comboPlayer.setEditable(true);
         allUsernames = new ArrayList<>(); // Initialisiere die Liste
 
-        List<User> users = datenbank.getAllPlayer();
-        for (User user : users) {
+        List<Player> users = datenbank.getAllPlayer();
+        for (Player user : users) {
             String username = user.getUsername();
             comboPlayer.addItem(username);
             allUsernames.add(username);

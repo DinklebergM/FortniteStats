@@ -32,7 +32,7 @@ public class FriendAction {
 
 
         comboFriendrequests.setEditable(true);
-        List<Player> allFriendrequest = datenbank.getFr(datenbank.getOwnUserID());
+        List<Player> allFriendrequest = datenbank.getFriendrequest(datenbank.getOwnUserID());
         for (Player player : allFriendrequest) {
             String username = player.getUsername();
             comboFriendrequests.addItem(username);

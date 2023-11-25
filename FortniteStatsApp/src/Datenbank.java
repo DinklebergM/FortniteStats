@@ -181,4 +181,28 @@ private int ownUserID;
         ;
         return player;
     }
+
+    public List<Player> getFriendrequest(int id){
+        List<Player> player = new ArrayList<>();
+        CallableStatement call ;
+        ResultSet resultSet ;
+        try {
+            call = this.con.prepareCall("{call P_GET_FRIENDREQUESTS(?)}");
+            call.setInt(1, id);
+            call.registerOutParameter(2, OracleTypes.CURSOR);
+            call.execute();
+            resultSet = (ResultSet) call.getObject(2);
+            while (resultSet.next()) {
+                int playerId = resultSet.getInt("ID");
+                String username = resultSet.getString("USERNAME");
+                player.add(new Player(playerId, username, null, 0, 0, 0, null));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        ;
+        return player;
+    }
 }
