@@ -53,7 +53,7 @@ public class FriendAction {
         // Part 3 Alle Freunde
         comboFriends.setEditable(true);
         List<Player> allFriends = datenbank.getFriends(datenbank.getOwnUserID());
-        for (Player player : allFriendrequest) {
+        for (Player player : allFriends) {
             String username = player.getUsername();
             comboFriends.addItem(username);
         }

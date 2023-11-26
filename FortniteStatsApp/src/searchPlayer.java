@@ -6,11 +6,11 @@ public class searchPlayer {
     public JPanel searchPlayerPanel;
     private JButton btnSearch;
     private JComboBox<String> comboPlayer;
-    private List<String> allUsernames; // Eine Liste zum Speichern aller Benutzernamen
+    private List<String> allUsernames;
 
     public searchPlayer(Datenbank datenbank) {
         comboPlayer.setEditable(true);
-        allUsernames = new ArrayList<>(); // Initialisiere die Liste
+        allUsernames = new ArrayList<>();
 
         List<Player> users = datenbank.getAllPlayer();
         for (Player user : users) {
@@ -19,8 +19,7 @@ public class searchPlayer {
             allUsernames.add(username);
         }
 
-        // Restliche Event-Listener
-        // ...
+
 
         comboPlayer.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override

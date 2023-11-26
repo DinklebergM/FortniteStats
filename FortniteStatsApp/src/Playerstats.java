@@ -13,6 +13,10 @@ public class Playerstats {
     public JPanel panelPlayerstats;
 
     public Playerstats(Datenbank datenbank, int id) {
+
+       // Player player = datenbank.
+
+
         btnAddPlayer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

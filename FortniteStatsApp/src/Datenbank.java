@@ -163,7 +163,7 @@ private int ownUserID;
         CallableStatement call ;
         ResultSet resultSet ;
         try {
-            call = this.con.prepareCall("{call P_GET_FRIENDS(?)}");
+            call = this.con.prepareCall("{call P_GET_FRIENDS(?,?)}");
             call.setInt(1, id);
             call.registerOutParameter(2, OracleTypes.CURSOR);
             call.execute();
@@ -187,7 +187,7 @@ private int ownUserID;
         CallableStatement call ;
         ResultSet resultSet ;
         try {
-            call = this.con.prepareCall("{call P_GET_FRIENDREQUESTS(?)}");
+            call = this.con.prepareCall("{call P_GET_FRIENDREQUESTS(?,?)}");
             call.setInt(1, id);
             call.registerOutParameter(2, OracleTypes.CURSOR);
             call.execute();
@@ -205,4 +205,6 @@ private int ownUserID;
         ;
         return player;
     }
+
+    public getPlayerProfile
 }
