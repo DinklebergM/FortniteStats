@@ -3,15 +3,17 @@ import java.util.Date;
 public class Player {
 
     private final int id;
-    private final Date creationDate;
+
     private String username;
     private String email;
     private int wins;
     private int matchCount;
     private int kills;
+    private String topWeapon;
+    private int topWeaponKills;
 
 
-    public Player(int id, String username, String email, int wins, int matchCount, int kills, Date date)
+    public Player(int id, String username, String email, int wins, int matchCount, int kills,String topWeapon,int topWeaponKills)
     {
         this.id = id;
         this. username = username;
@@ -19,7 +21,9 @@ public class Player {
         this.wins = wins;
         this.matchCount = matchCount;
         this.kills = kills;
-        this.creationDate = date;
+        this.topWeapon = topWeapon;
+        this.topWeaponKills = topWeaponKills;
+
     }
 
     public int getID()
@@ -38,8 +42,23 @@ public class Player {
     {
         return email;
     }
-    public Date getCreationDate()
-    {
-        return creationDate;
+    public int getWins() {return wins;}
+    public int getKills() {
+
+        return kills;
+
     }
+    public int getMatchCount()
+    {
+        return matchCount;
+    }
+    public String getTopWeapon()
+    {
+        return topWeapon;
+    }
+    public int getTopWeaponKills()
+    {
+        return topWeaponKills;
+    }
+
 }

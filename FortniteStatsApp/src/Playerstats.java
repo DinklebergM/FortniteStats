@@ -11,10 +11,19 @@ public class Playerstats {
     private JLabel lblKpD;
     private JButton btnAddPlayer;
     public JPanel panelPlayerstats;
+    private JLabel lblTopWeapon;
+    private JLabel lblTopWeaponKills;
 
     public Playerstats(Datenbank datenbank, int id) {
 
-       // Player player = datenbank.
+        Player player = datenbank.getPlayerProfile(id);
+        lblUsername.setText("Username: "+ player.getUsername());
+        lblMatches.setText("Matches: "+ player.getMatchCount());
+        lblKills.setText("Kills: "+ player.getKills());
+        lblWins.setText("Wins: "+ player.getWins());
+        lblKpD.setText("KpD: "+ (double)player.getKills()/player.getMatchCount());
+        lblTopWeapon.setText("Top Weapon: "+ player.getTopWeapon());
+        lblTopWeaponKills.setText("Top Weapon Kills: "+ player.getTopWeaponKills());
 
 
         btnAddPlayer.addActionListener(new ActionListener() {

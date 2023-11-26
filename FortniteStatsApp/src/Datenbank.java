@@ -26,6 +26,11 @@ private int ownUserID;
 
     }
 
+    /**
+     * Methode zum Überprüfen, ob der eingegebene Username existiert
+     * @param username der im "login" eingebenen username
+     * @return userId des Users, 0 wenn der Username nicht existiert
+     */
     public int checkUserID(String username) {
         try {
             CallableStatement call = this.con.prepareCall("{call P_CHECK_USERNAME(?,?,?)}");
@@ -48,24 +53,14 @@ private int ownUserID;
 
                     return 0;
                 }
-
-
-
-            } catch (Throwable var6) {
-                if (call != null) {
-                    try {
-                        call.close();
-                    } catch (Throwable var5) {
-                        var6.addSuppressed(var5);
-                    }
-                }
-
-                throw var6;
+            } catch (SQLException e) {
+                System.out.println(e);
+                return 0;
             }
 
 
-        } catch (SQLException var7) {
-            System.out.println(var7);
+        } catch (SQLException e) {
+            System.out.println(e);
             return 0;
         }
 
@@ -106,7 +101,7 @@ private int ownUserID;
 
                 String username = resultSet.getString("username");
                 int userId = resultSet.getInt("id");
-                userList.add(new Player( userId,username, null, 0, 0, 0, null));
+                userList.add(new Player( userId,username, null, 0, 0, 0, null,0));
             }
 
 
@@ -171,7 +166,7 @@ private int ownUserID;
             while (resultSet.next()) {
                 int playerId = resultSet.getInt("ID");
                 String username = resultSet.getString("USERNAME");
-                player.add(new Player(playerId, username, null, 0, 0, 0, null));
+                player.add(new Player(playerId, username,  null, 0, 0, 0, null,0));
             }
 
         }catch (SQLException e){
@@ -195,7 +190,7 @@ private int ownUserID;
             while (resultSet.next()) {
                 int playerId = resultSet.getInt("ID");
                 String username = resultSet.getString("USERNAME");
-                player.add(new Player(playerId, username, null, 0, 0, 0, null));
+                player.add(new Player(playerId, username,  null, 0, 0, 0, null,0));
             }
 
         }catch (SQLException e){
@@ -206,5 +201,31 @@ private int ownUserID;
         return player;
     }
 
-    public getPlayerProfile
+    public Player getPlayerProfile(int id){
+        Player player = null;
+        try {
+            CallableStatement call ;
+            call = this.con.prepareCall("{call P_GET_PLAYER_STATS_AND_TOP_WEAPON(?,?,?,?,?,?,?,?)}");
+            call.setInt(1, id);
+            call.registerOutParameter(2, Types.VARCHAR);//username
+            call.registerOutParameter(3, Types.VARCHAR);//email
+            call.registerOutParameter(4, Types.INTEGER);//wins
+            call.registerOutParameter(5, Types.INTEGER);//kills
+            call.registerOutParameter(6, Types.INTEGER);//matches
+            call.registerOutParameter(7, Types.VARCHAR);//top weapon
+            call.registerOutParameter(8, Types.INTEGER);//top weapon kills
+            call.execute();
+
+            player= new Player(id,call.getString(2),
+                    call.getString(3),call.getInt(4),call.getInt(5),
+                    call.getInt(6),call.getString(7),call.getInt(8));
+            System.out.println(player);
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+
+        return player;
+    }
 }
