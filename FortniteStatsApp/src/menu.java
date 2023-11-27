@@ -47,5 +47,21 @@ public class menu {
                 frame.setVisible(true);
             }
         });
+        btnShowProfile.addActionListener(new ActionListener() {
+            /**
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Own Profile");
+                OwnProfile ownProfile = new OwnProfile(datenbank);
+                frame.setContentPane(ownProfile.panelOwnProfile);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
+            }
+        });
     }
 }

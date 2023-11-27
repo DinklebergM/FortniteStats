@@ -228,4 +228,16 @@ private int ownUserID;
 
         return player;
     }
+    public void updatePlayerProfile(int id,String username,String email){
+        try {
+            CallableStatement call ;
+            call = this.con.prepareCall("{call P_UPDATE_PROFILE(?,?,?)}");
+            call.setInt(1, id);
+            call.setString(2, username);
+            call.setString(3, email);
+            call.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
