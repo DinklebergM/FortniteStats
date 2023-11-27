@@ -12,7 +12,17 @@ public class Player {
     private String topWeapon;
     private int topWeaponKills;
 
-
+    /**
+     * Konstruktor für die Klasse Player
+     * @param id
+     * @param username
+     * @param email
+     * @param wins
+     * @param matchCount
+     * @param kills
+     * @param topWeapon
+     * @param topWeaponKills
+     */
     public Player(int id, String username, String email, int wins, int matchCount, int kills,String topWeapon,int topWeaponKills)
     {
         this.id = id;
@@ -26,10 +36,15 @@ public class Player {
 
     }
 
+    /**
+     * Gibt die ID des Spielers zurück
+     * @return ID des Spielers
+     */
     public int getID()
     {
         return id;
     }
+
     public String getUsername()
     {
         return username;
