@@ -2,11 +2,19 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+/**
+ * Klasse für die Friendaction
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class login {
     private JTextField tbUsername;
     public JPanel loginPanel;
     private JButton loginButton;
-private Datenbank datenbank;
+
+    /**
+     * Konstruktor für die Klasse login
+     * @param datenbank
+     */
     public login(Datenbank datenbank) {
         loginButton.addActionListener(new ActionListener() {
             @Override

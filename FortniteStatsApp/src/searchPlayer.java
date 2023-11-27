@@ -2,14 +2,22 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 
+/**
+ * Klasse zum Suchen eines Spielers
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class searchPlayer {
     public JPanel searchPlayerPanel;
     private JButton btnSearch;
     private JComboBox<String> comboPlayer;
     private List<String> allUsernames;
 
+    /**
+     * Konstruktor für die Klasse searchPlayer
+     * @param datenbank
+     */
     public searchPlayer(Datenbank datenbank) {
-        comboPlayer.setEditable(true);
+
         allUsernames = new ArrayList<>();
 
         List<Player> users = datenbank.getAllPlayer();
@@ -19,15 +27,6 @@ public class searchPlayer {
             allUsernames.add(username);
         }
 
-
-
-        comboPlayer.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                JTextField textField = (JTextField) e.getSource();
-                comboFilter(textField.getText());
-            }
-        });
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,22 +39,5 @@ public class searchPlayer {
                 frame.setVisible(true);
             }
         });
-    }
-
-    private void comboFilter(String enteredText) {
-        List<String> filterArray = new ArrayList<>();
-        for (String username : allUsernames) {
-            if (username.toLowerCase().contains(enteredText.toLowerCase())) {
-                filterArray.add(username);
-            }
-        }
-        if (filterArray.size() > 0) {
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(filterArray.toArray(new String[0]));
-            comboPlayer.setModel(model);
-            comboPlayer.setSelectedItem(enteredText);
-            comboPlayer.showPopup();
-        } else {
-            comboPlayer.hidePopup();
-        }
     }
 }

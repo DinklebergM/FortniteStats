@@ -4,19 +4,32 @@ import oracle.jdbc.OracleTypes;
 
 import java.util.*;
 
-
+/**
+ * Klasse für die Datenbankverbindung
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class Datenbank {
     private int ownUserID;
     Connection con;
 
+    /**
+     * Konstruktor für die Klasse Datenbank
+     */
     public Datenbank() {
         this.init();
     }
 
+    /**
+     * Gibt die eigene UserID zurück
+     * @return eigene UserID
+     */
     public int getOwnUserID() {
         return ownUserID;
     }
 
+    /**
+     * Methode zum Initialisieren der Datenbankverbindung
+     */
     private void init() {
         String url = "jdbc:oracle:thin:@172.22.160.22:1521:XE";
         String user = "C##FBPOOL211";
@@ -110,6 +123,7 @@ public class Datenbank {
                 int userId = resultSet.getInt("id");
                 userList.add(new Player(userId, username, null, 0, 0, 0, null, 0));
             }
+            call.close();
             return userList;
         } catch (SQLException e) {
 
@@ -142,10 +156,12 @@ public class Datenbank {
                 int kills = resultSet.getInt("KILLS");
                 matchResults.add(new MatchResult(matchID, matchDate, placement, kills));
             }
+            call.close();
         } catch (SQLException e) {
             System.out.println("SQL-Fehler: " + e.getMessage());
 
         }
+
         return matchResults;
     }
 
@@ -169,7 +185,7 @@ public class Datenbank {
                 String username = resultSet.getString("USERNAME");
                 player.add(new Player(playerId, username, null, 0, 0, 0, null, 0));
             }
-
+            call.close();
         } catch (SQLException e) {
             System.out.println("SQL-Fehler: " + e.getMessage());
             return null;
@@ -197,7 +213,7 @@ public class Datenbank {
                 String username = resultSet.getString("USERNAME");
                 player.add(new Player(playerId, username, null, 0, 0, 0, null, 0));
             }
-
+            call.close();
         } catch (SQLException e) {
             System.out.println("SQL-Fehler: " + e.getMessage());
             return null;
@@ -228,7 +244,7 @@ public class Datenbank {
             player = new Player(id, call.getString(2),
                     call.getString(3), call.getInt(4), call.getInt(5),
                     call.getInt(6), call.getString(7), call.getInt(8));
-            System.out.println(player);
+            call.close();
         } catch (SQLException e) {
             System.out.println("SQL-Fehler: " + e.getMessage());
             return null;
@@ -250,6 +266,7 @@ public class Datenbank {
             call.setString(2, username);
             call.setString(3, email);
             call.execute();
+            call.close();
         } catch (SQLException e) {
             System.out.println("SQL-Fehler: " + e.getMessage());
         }

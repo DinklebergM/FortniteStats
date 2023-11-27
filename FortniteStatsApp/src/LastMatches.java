@@ -1,12 +1,20 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-
+/**
+ * Klasse für die letzten 10 Matches eines Spielers
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class LastMatches {
     public JPanel panelLastMatches;
     private JTable tableMatches;
     private DefaultTableModel model;
 
+    /**
+     * Konstruktor für die Klasse LastMatches
+     * @param datenbank
+     * @param id
+     */
     public LastMatches(Datenbank datenbank, int id) {
 
         model = new DefaultTableModel() {

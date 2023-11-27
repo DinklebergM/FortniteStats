@@ -2,7 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
+/**
+ * Klasse für die Freundesliste und Freundesaktionen
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class FriendAction {
     public JPanel panelFriendAction;
     private JComboBox comboPlayerlist;
@@ -13,6 +16,10 @@ public class FriendAction {
     private JButton btnDeleteFriend;
     private JButton btnDeleteFriendrequest;
 
+    /**
+     * Konstruktor für die Klasse FriendAction
+     * @param datenbank
+     */
     public FriendAction(Datenbank datenbank) {
       // Part 1 Alle Benutzer zum adden
 

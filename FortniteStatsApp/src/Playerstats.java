@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Klasse für die Playerstats und als Freund adden
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class Playerstats {
 
     private JLabel lblUsername;
@@ -14,6 +17,11 @@ public class Playerstats {
     private JLabel lblTopWeapon;
     private JLabel lblTopWeaponKills;
 
+    /**
+     * Konstruktor für die Klasse Playerstats
+     * @param datenbank
+     * @param id
+     */
     public Playerstats(Datenbank datenbank, int id) {
 
         Player player = datenbank.getPlayerProfile(id);

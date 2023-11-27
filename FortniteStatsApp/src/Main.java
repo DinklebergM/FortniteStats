@@ -1,8 +1,15 @@
 import java.util.Date;
 import javax.swing.*;
 
+/**
+ * Main Klasse
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class Main {
-
+    /**
+     * Main Methode
+     * @param args
+     */
     public static void main (String[] args)
     {
         Datenbank datenbank = new Datenbank();

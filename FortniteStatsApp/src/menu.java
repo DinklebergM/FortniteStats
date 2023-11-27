@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ * Klasse für das Menü
+ */
 public class menu {
     public JPanel menuPanel;
     private JButton btnSearchPlayer;
@@ -9,6 +13,10 @@ public class menu {
     private JButton btnLastMatches;
     private JButton btnFriendMenu;
 
+    /**
+     * Konstruktor für die Klasse menu
+     * @param datenbank
+     */
     public menu(Datenbank datenbank){
 
         btnSearchPlayer.addActionListener(new ActionListener() {

@@ -1,5 +1,8 @@
 import java.util.Date;
-
+/**
+ * Klasse für die MatchResult Objekte
+ * @author Marco Wolff 7215191, Jonas Teiner 7216279
+ */
 public class Player {
 
     private final int id;

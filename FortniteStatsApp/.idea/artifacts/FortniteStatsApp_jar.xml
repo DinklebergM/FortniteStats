@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FortniteStatsApp:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FortniteStatsApp_jar</output-path>
+    <root id="archive" name="FortniteStatsApp.jar">
+      <element id="module-output" name="FortniteStatsApp" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/ojdbc11.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
